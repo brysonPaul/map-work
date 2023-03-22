@@ -1,13 +1,21 @@
 
-
-let locations = [/*arboretum*/{lat:28.600904362555667,lng: -81.19679500000177},/*library*/{lat:28.600904362555667,},{lat:28.600904362555667,},{lat:28.600904362555667,}]
+//const {PinView} = await google.map.importLibrary("marker")
+let locations = [
+  /*arboretum*/{lat:28.600904362555667,lng: -81.19679500000177},
+  /*library*/{lat:28.600582998057156,lng: -81.20146960470308},
+  /*gym*/{lat:28.597130866415107,lng: -81.20287147915882},
+  /*cb1*/{lat:28.603733242308454,lng: -81.20054998037958},
+  /*student union*/{lat:28.60160681694149,lng: -81.20044675481425},
+  /*eng II*/{lat:28.601418424934305,lng: -81.19848337782615}
+]
 
 function initMap() {
   var mapoptions = {
     center: { lat:28.602776953885968, lng: -81},
     zoom: 17,
-    //mapTypeId:  'satellite',
-    disableDefaultUI: true
+    mapId:  '6a034a94ab148b12',
+    disableDefaultUI: true,
+    clickableIcons: false
    // draggable: false
   }
 
@@ -20,6 +28,9 @@ function initMap() {
   let options  = {
     enableHighAccuracy: true
   }
+
+  //add markers
+  
   
   if (navigator.geolocation) {
     const watchId = navigator.geolocation.watchPosition(
@@ -46,6 +57,19 @@ function initMap() {
   } else {
     // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter());
+  }
+  for(let x=0;x<locations.length;x++){
+    const pinViewBackground = new google.maps.marker.PinView({
+      background: "#333333",
+      borderColor: "#FFD700",
+      glyphColor: "#FFD700"
+    });
+    const markerViewBackground = new google.maps.marker.AdvancedMarkerView({
+      map,
+      position: locations[x],
+      content: pinViewBackground.element,
+    });
+    console.log(locations[x]);
   }
   
 }
